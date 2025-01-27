@@ -64,8 +64,7 @@ const CookieNotification = () => {
           Cyberbezpieczeństwo
         </a>
         <div style={{ height: '10px', display: 'block' }}></div>
-        <a href="javascript:void(0);"
-          onClick={() => createCookie('simplecookienotification_v01', 1, 7)}
+        <a href="javascript:void(0);" onClick={() => createCookie('simplecookienotification_v01', 1, 7)}
           style={{
             position: 'relative',
             background: 'rgb(76, 175, 80)',
