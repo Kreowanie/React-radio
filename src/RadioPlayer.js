@@ -116,19 +116,22 @@ const RadioPlayer = () => {
   });
 
   useEffect(() => {
-    // Ustawienie preload dla kanałów
-    audioRef.current.current.preload = 'none';
-    audioRef.current.radio1.preload = 'none';
-
-    // Aktualizacja daty i godziny co sekundę
+    // Store a stable reference to the audioRef.current
+    const audioInstances = audioRef.current;
+  
+    // Set preload for channels
+    audioInstances.current.preload = 'none';
+    audioInstances.radio1.preload = 'none';
+  
+    // Update date and time every second
     const timer = setInterval(() => {
       setCurrentDateTime(new Date());
     }, 1000);
-
+  
     return () => {
-      clearInterval(timer); // Czyszczenie timera po odmontowaniu komponentu
-      // Zatrzymanie odtwarzania wszystkich kanałów
-      Object.values(audioRef.current).forEach((audio) => audio.pause());
+      clearInterval(timer); // Clear the timer when the component unmounts
+      // Pause all channels
+      Object.values(audioInstances).forEach((audio) => audio.pause());
     };
   }, []);
 
