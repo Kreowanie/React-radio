@@ -116,35 +116,22 @@ const RadioPlayer = () => {
   });
 
   useEffect(() => {
-    // Ustawienie preload dla kanałów, jeśli audioRef.current istnieje
-    if (audioRef.current) {
-      // Sprawdzenie, czy audioRef.current zawiera właściwości 'current' i 'radio1'
-      if (audioRef.current.current) {
-        audioRef.current.current.preload = 'none';
-      }
-      if (audioRef.current.radio1) {
-        audioRef.current.radio1.preload = 'none';
-      }
-    }
-  
+    // Ustawienie preload dla kanałów
+    audioRef.current.current.preload = 'none';
+    audioRef.current.radio1.preload = 'none';
+
     // Aktualizacja daty i godziny co sekundę
     const timer = setInterval(() => {
       setCurrentDateTime(new Date());
     }, 1000);
-  
+
     return () => {
       clearInterval(timer); // Czyszczenie timera po odmontowaniu komponentu
-      // Zatrzymanie odtwarzania wszystkich kanałów audio
-      if (audioRef.current) {
-        // Przechodzimy przez wszystkie referencje audio, jeśli audioRef.current jest obiektem
-        Object.values(audioRef.current).forEach((audio) => {
-          if (audio instanceof HTMLAudioElement) {
-            audio.pause(); // Zatrzymaj odtwarzanie
-          }
-        });
-      }
+      // Zatrzymanie odtwarzania wszystkich kanałów
+      Object.values(audioRef.current).forEach((audio) => audio.pause());
     };
-  }, []); // Pusta tablica zależności
+  }, []);
+
   const changeChannel = (channel) => {
     // Zatrzymanie bieżącego odtwarzania
     audioRef.current[currentChannel].pause();
